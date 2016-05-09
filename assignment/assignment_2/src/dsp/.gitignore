@@ -1,0 +1,5 @@
+Debug
+Release
+*.cdb
+*.s62
+*.h62
