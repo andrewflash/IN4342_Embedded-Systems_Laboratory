@@ -1,0 +1,90 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 70.00      0.07     0.07        1    70.00    70.00  gaussian_smooth
+ 20.00      0.09     0.02        1    20.00    20.00  non_max_supp
+ 10.00      0.10     0.01        1    10.00   100.00  canny
+  0.00      0.10     0.00       81     0.00     0.00  follow_edges
+  0.00      0.10     0.00        1     0.00     0.00  apply_hysteresis
+  0.00      0.10     0.00        1     0.00     0.00  derrivative_x_y
+  0.00      0.10     0.00        1     0.00     0.00  initTimer
+  0.00      0.10     0.00        1     0.00     0.00  make_gaussian_kernel
+  0.00      0.10     0.00        1     0.00     0.00  printTimer
+  0.00      0.10     0.00        1     0.00     0.00  read_pgm_image
+  0.00      0.10     0.00        1     0.00     0.00  startTimer
+  0.00      0.10     0.00        1     0.00     0.00  stopTimer
+  0.00      0.10     0.00        1     0.00     0.00  write_pgm_image
+
+			Call graph
+
+
+granularity: each sample hit covers 4 byte(s) for 10.00% of 0.10 seconds
+
+index % time    self  children    called     name
+                0.01    0.09       1/1           main [2]
+[1]    100.0    0.01    0.09       1         canny [1]
+                0.07    0.00       1/1           gaussian_smooth [3]
+                0.02    0.00       1/1           non_max_supp [4]
+                0.00    0.00       1/1           derrivative_x_y [7]
+                0.00    0.00       1/1           apply_hysteresis [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]    100.0    0.00    0.10                 main [2]
+                0.01    0.09       1/1           canny [1]
+                0.00    0.00       1/1           initTimer [8]
+                0.00    0.00       1/1           read_pgm_image [11]
+                0.00    0.00       1/1           startTimer [12]
+                0.00    0.00       1/1           stopTimer [13]
+                0.00    0.00       1/1           printTimer [10]
+                0.00    0.00       1/1           write_pgm_image [14]
+-----------------------------------------------
+                0.07    0.00       1/1           canny [1]
+[3]     70.0    0.07    0.00       1         gaussian_smooth [3]
+                0.00    0.00       1/1           make_gaussian_kernel [9]
+-----------------------------------------------
+                0.02    0.00       1/1           canny [1]
+[4]     20.0    0.02    0.00       1         non_max_supp [4]
+-----------------------------------------------
+                                 245             follow_edges [5]
+                0.00    0.00      81/81          apply_hysteresis [6]
+[5]      0.0    0.00    0.00      81+245     follow_edges [5]
+                                 245             follow_edges [5]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [1]
+[6]      0.0    0.00    0.00       1         apply_hysteresis [6]
+                0.00    0.00      81/81          follow_edges [5]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [1]
+[7]      0.0    0.00    0.00       1         derrivative_x_y [7]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[8]      0.0    0.00    0.00       1         initTimer [8]
+-----------------------------------------------
+                0.00    0.00       1/1           gaussian_smooth [3]
+[9]      0.0    0.00    0.00       1         make_gaussian_kernel [9]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[10]     0.0    0.00    0.00       1         printTimer [10]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[11]     0.0    0.00    0.00       1         read_pgm_image [11]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[12]     0.0    0.00    0.00       1         startTimer [12]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[13]     0.0    0.00    0.00       1         stopTimer [13]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[14]     0.0    0.00    0.00       1         write_pgm_image [14]
+-----------------------------------------------
+
+Index by function name
+
+   [6] apply_hysteresis        [8] initTimer              [12] startTimer
+   [1] canny                   [9] make_gaussian_kernel   [13] stopTimer
+   [7] derrivative_x_y         [4] non_max_supp           [14] write_pgm_image
+   [5] follow_edges           [10] printTimer
+   [3] gaussian_smooth        [11] read_pgm_image
