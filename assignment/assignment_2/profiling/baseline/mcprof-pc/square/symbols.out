@@ -1,0 +1,43 @@
+ID: 1 FUNC angle_radians >:0
+ID: 2 FUNC radian_direction >:0
+ID: 3 FUNC magnitude_x_y >:0
+ID: 4 FUNC derrivative_x_y >:0
+ID: 5 FUNC make_gaussian_kernel >:0
+ID: 6 FUNC gaussian_smooth >:0
+ID: 7 FUNC canny >:0
+ID: 8 FUNC main >:0
+ID: 9 FUNC follow_edges >:0
+ID: 10 FUNC apply_hysteresis >:0
+ID: 11 FUNC non_max_supp >:0
+ID: 12 FUNC read_pgm_image >:0
+ID: 13 FUNC write_pgm_image >:0
+ID: 14 FUNC read_ppm_image >:0
+ID: 15 FUNC write_ppm_image >:0
+ID: 16 FUNC initTimer >:0
+ID: 17 FUNC clearTimer >:0
+ID: 18 FUNC startTimer >:0
+ID: 19 FUNC restartTimer >:0
+ID: 20 FUNC stopTimer >:0
+ID: 21 FUNC printTimer >:0
+ID: 22 OBJ Obj22 canny_edge.c:130 >pgm_io.c:33
+     `saddr': 0x000000654010( 568)
+ID: 23 OBJ Obj23 canny_edge.c:130 >pgm_io.c:72
+     `saddr': 0x000000654250( 14400)
+ID: 24 OBJ Obj24 canny_edge.c:153 canny_edge.c:200 canny_edge.c:452 >canny_edge.c:546
+     `saddr': 0x000000654010( 60)
+ID: 25 OBJ Obj25 canny_edge.c:153 canny_edge.c:200 >canny_edge.c:459
+     `saddr': 0x000000657aa0( 57600)
+ID: 26 OBJ Obj26 canny_edge.c:153 canny_edge.c:200 >canny_edge.c:465
+     `saddr': 0x000000665bb0( 28800)
+ID: 27 OBJ Obj27 canny_edge.c:153 canny_edge.c:206 >canny_edge.c:401
+     `saddr': 0x000000657aa0( 28800)
+ID: 28 OBJ Obj28 canny_edge.c:153 canny_edge.c:206 >canny_edge.c:405
+     `saddr': 0x00000066cc40( 28800)
+ID: 29 OBJ Obj29 canny_edge.c:153 >canny_edge.c:240
+     `saddr': 0x000000673cd0( 28800)
+ID: 30 OBJ Obj30 canny_edge.c:153 >canny_edge.c:253
+     `saddr': 0x00000065eb30( 14400)
+ID: 31 OBJ Obj31 canny_edge.c:153 >canny_edge.c:264
+     `saddr': 0x00000067ad60( 14400)
+ID: 32 OBJ Obj32 canny_edge.c:167 >pgm_io.c:108
+     `saddr': 0x000000654010( 568)

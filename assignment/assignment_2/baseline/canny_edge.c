@@ -55,7 +55,7 @@
 
 #define VERBOSE 0
 // Uncomment MCPROF to compile on ARM
-#define MCPROF
+//#define MCPROF
 #define BOOSTBLURFACTOR 90.0
 
 #include <stdio.h>
