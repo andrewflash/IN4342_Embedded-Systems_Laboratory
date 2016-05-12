@@ -1,0 +1,18 @@
+         magnitude_x_y    derrivative_x_y    make_gaussian_kernel    gaussian_smooth    canny    follow_edges    apply_hysteresis    non_max_supp    Obj24    Obj25    Obj26    Obj27    Obj28    Obj29    Obj30    Obj31
+    magnitude_x_y    0    0    0    0    0    0    0    0    0    0    0    0    0    28800    0    0
+    derrivative_x_y    0    230548    0    0    135    0    0    0    0    0    0    28800    28800    0    0    0
+    make_gaussian_kernel    0    36    428    8    0    0    0    0    120    0    0    0    0    0    0    0
+    gaussian_smooth    0    60    0    8    0    0    0    0    0    57600    28800    0    0    0    0    0
+    canny    0    0    0    0    184    0    0    0    0    0    0    0    0    0    0    0
+    follow_edges    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    733
+    apply_hysteresis    0    0    0    0    0    0    157252    0    0    0    0    0    0    0    0    28547
+    non_max_supp    0    0    0    0    0    0    0    0    0    0    0    0    0    0    18150    0
+    Obj23    0    0    0    209280    0    0    0    0    0    0    0    0    0    0    0    0
+    Obj24    0    0    60    1674240    0    0    0    0    0    0    0    0    0    0    0    0
+    Obj25    0    0    0    837120    0    0    0    0    0    0    0    0    0    0    0    0
+    Obj26    0    115200    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+    Obj27    28800    0    0    0    0    0    0    19416    0    0    0    0    0    0    0    0
+    Obj28    28800    0    0    0    0    0    0    25430    0    0    0    0    0    0    0    0
+    Obj29    0    0    0    0    0    1466    1686    136890    0    0    0    0    0    0    0    0
+    Obj30    0    0    0    0    0    0    14400    0    0    0    0    0    0    0    0    0
+    Obj31    0    0    0    0    0    5880    43200    0    0    0    0    0    0    0    0    0

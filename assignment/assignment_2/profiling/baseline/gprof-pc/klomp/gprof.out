@@ -1,0 +1,52 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+  0.00      0.00     0.00      120     0.00     0.00  follow_edges
+  0.00      0.00     0.00        1     0.00     0.00  apply_hysteresis
+  0.00      0.00     0.00        1     0.00     0.00  derrivative_x_y
+  0.00      0.00     0.00        1     0.00     0.00  gaussian_smooth
+  0.00      0.00     0.00        1     0.00     0.00  magnitude_x_y
+  0.00      0.00     0.00        1     0.00     0.00  make_gaussian_kernel
+  0.00      0.00     0.00        1     0.00     0.00  non_max_supp
+
+			Call graph
+
+
+granularity: each sample hit covers 2 byte(s) no time propagated
+
+index % time    self  children    called     name
+                                5980             follow_edges [1]
+                0.00    0.00     120/120         apply_hysteresis [2]
+[1]      0.0    0.00    0.00     120+5980    follow_edges [1]
+                                5980             follow_edges [1]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [10]
+[2]      0.0    0.00    0.00       1         apply_hysteresis [2]
+                0.00    0.00     120/120         follow_edges [1]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [10]
+[3]      0.0    0.00    0.00       1         derrivative_x_y [3]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [10]
+[4]      0.0    0.00    0.00       1         gaussian_smooth [4]
+                0.00    0.00       1/1           make_gaussian_kernel [6]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [10]
+[5]      0.0    0.00    0.00       1         magnitude_x_y [5]
+-----------------------------------------------
+                0.00    0.00       1/1           gaussian_smooth [4]
+[6]      0.0    0.00    0.00       1         make_gaussian_kernel [6]
+-----------------------------------------------
+                0.00    0.00       1/1           canny [10]
+[7]      0.0    0.00    0.00       1         non_max_supp [7]
+-----------------------------------------------
+
+Index by function name
+
+   [2] apply_hysteresis        [4] gaussian_smooth         [7] non_max_supp
+   [3] derrivative_x_y         [5] magnitude_x_y
+   [1] follow_edges            [6] make_gaussian_kernel

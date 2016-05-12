@@ -6,10 +6,12 @@ PIN_DIR=$(PIN_ROOT)
 MCPROF_DIR=/home/ubuntu/mcprof
 
 # set the path to the toolchain for cross-compilation for arm
-#CC =/data/usr/local/share/codesourcery/bin/arm-none-linux-gnueabi-gcc
-CC = gcc
+CC =/data/usr/local/share/codesourcery/bin/arm-none-linux-gnueabi-gcc
+#CC = gcc
 INC = -I.
-CFLAGS =-O2 -Wall
+#CFLAGS =-O2 -Wall
+#CFLAGS = -O3 -Wall
+CFLAGS = -O3 -Wall -mfpu=vfp -ftree-vectorize -mfloat-abi=softfp
 LFLAGS = -L.
 LIBS = -lm
 LDFLAGS=
@@ -18,9 +20,9 @@ CSRCS 	= canny_edge.c hysteresis.c pgm_io.c Timer.c
 OBJS	=$(CSRCS:%.c=%.o)
 
 # Use one of the following pictures
-PIC	=./pics/klomp.pgm
-# PIC	=./pics/square.pgm
-# PIC	=./pics/tiger.pgm
+#PIC	=./pics/klomp.pgm
+#PIC	=./pics/square.pgm
+PIC	=./pics/tiger.pgm
 
 EXEC    = canny
 CMD	= ./$(EXEC) $(PIC)
