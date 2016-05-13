@@ -1,0 +1,10 @@
+Total Time = 58.959 msec
+Total Time = 59.845 msec
+Total Time = 58.716 msec
+Total Time = 58.899 msec
+Total Time = 60.303 msec
+Total Time = 59.631 msec
+Total Time = 58.777 msec
+Total Time = 59.54 msec
+Total Time = 67.688 msec
+Total Time = 58.899 msec
