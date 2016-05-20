@@ -1,6 +1,6 @@
 ;******************************************************************************
 ;* TMS320C6x C/C++ Codegen                                       Unix v6.1.17 *
-;* Date/Time created: Mon May  9 15:31:48 2016                                *
+;* Date/Time created: Thu May 19 21:42:06 2016                                *
 ;******************************************************************************
 	.compiler_opts --c64p_l1d_workaround=default --disable:=sploop --endian=little --hll_source=on --mem_model:code=far --mem_model:const=data --mem_model:data=far --predefine_memory_model_macros --quiet --silicon_version=6500 --symdebug:skeletal 
 
@@ -31,7 +31,7 @@ $C$DW$CU	.dwtag  DW_TAG_compile_unit
 	.dwattr $C$DW$CU, DW_AT_name("task.c")
 	.dwattr $C$DW$CU, DW_AT_producer("TMS320C6x C/C++ Codegen Unix v6.1.17 Copyright (c) 1996-2010 Texas Instruments Incorporated")
 	.dwattr $C$DW$CU, DW_AT_TI_version(0x01)
-	.dwattr $C$DW$CU, DW_AT_comp_dir("/data/home/in4342-01/PengqiChen/Assign2/pool_notify/dsp")
+	.dwattr $C$DW$CU, DW_AT_comp_dir("/home/ubuntu/Documents/Assig2/pool_notify/dsp")
 ;*****************************************************************************
 ;* CINIT RECORDS                                                             *
 ;*****************************************************************************
@@ -191,7 +191,7 @@ $C$DW$41	.dwtag  DW_TAG_variable, DW_AT_name("length")
 	.dwattr $C$DW$41, DW_AT_type(*$C$DW$T$10)
 	.dwattr $C$DW$41, DW_AT_external
 _count$1:	.usect	".far",4,4
-;	/data/bbToolChain/usr/local/share/c6000/bin/opt6x /tmp/020263rbIWh /tmp/02026XjtEwx 
+;	/data/usr/local/share/c6000/bin/opt6x /tmp/05883FbwYv0 /tmp/05883V6TudH 
 	.sect	".text"
 	.clink
 	.global	_sum_dsp
@@ -407,7 +407,7 @@ $C$L6:
            ; BRANCH OCCURS {B3}              ; |109| 
 
 $C$DW$45	.dwtag  DW_TAG_TI_loop
-	.dwattr $C$DW$45, DW_AT_name("/data/home/in4342-01/PengqiChen/Assign2/pool_notify/dsp/task.asm:$C$L3:1:1462800708")
+	.dwattr $C$DW$45, DW_AT_name("/home/ubuntu/Documents/Assig2/pool_notify/dsp/task.asm:$C$L3:1:1463686926")
 	.dwattr $C$DW$45, DW_AT_TI_begin_file("task.c")
 	.dwattr $C$DW$45, DW_AT_TI_begin_line(0x68)
 	.dwattr $C$DW$45, DW_AT_TI_end_line(0x6b)
@@ -418,7 +418,7 @@ $C$DW$46	.dwtag  DW_TAG_TI_loop_range
 
 
 $C$DW$47	.dwtag  DW_TAG_TI_loop
-	.dwattr $C$DW$47, DW_AT_name("/data/home/in4342-01/PengqiChen/Assign2/pool_notify/dsp/task.asm:$C$L1:1:1462800708")
+	.dwattr $C$DW$47, DW_AT_name("/home/ubuntu/Documents/Assig2/pool_notify/dsp/task.asm:$C$L1:1:1463686926")
 	.dwattr $C$DW$47, DW_AT_TI_begin_file("task.c")
 	.dwattr $C$DW$47, DW_AT_TI_begin_line(0x68)
 	.dwattr $C$DW$47, DW_AT_TI_end_line(0x6b)
@@ -801,7 +801,7 @@ $C$DW$60	.dwtag  DW_TAG_TI_branch
            ; BRANCH OCCURS {B3}              ; |130| 
 
 $C$DW$61	.dwtag  DW_TAG_TI_loop
-	.dwattr $C$DW$61, DW_AT_name("/data/home/in4342-01/PengqiChen/Assign2/pool_notify/dsp/task.asm:$C$L9:1:1462800708")
+	.dwattr $C$DW$61, DW_AT_name("/home/ubuntu/Documents/Assig2/pool_notify/dsp/task.asm:$C$L9:1:1463686926")
 	.dwattr $C$DW$61, DW_AT_TI_begin_file("task.c")
 	.dwattr $C$DW$61, DW_AT_TI_begin_line(0x68)
 	.dwattr $C$DW$61, DW_AT_TI_end_line(0x6b)
@@ -812,7 +812,7 @@ $C$DW$62	.dwtag  DW_TAG_TI_loop_range
 
 
 $C$DW$63	.dwtag  DW_TAG_TI_loop
-	.dwattr $C$DW$63, DW_AT_name("/data/home/in4342-01/PengqiChen/Assign2/pool_notify/dsp/task.asm:$C$L7:1:1462800708")
+	.dwattr $C$DW$63, DW_AT_name("/home/ubuntu/Documents/Assig2/pool_notify/dsp/task.asm:$C$L7:1:1463686926")
 	.dwattr $C$DW$63, DW_AT_TI_begin_file("task.c")
 	.dwattr $C$DW$63, DW_AT_TI_begin_line(0x68)
 	.dwattr $C$DW$63, DW_AT_TI_end_line(0x6b)

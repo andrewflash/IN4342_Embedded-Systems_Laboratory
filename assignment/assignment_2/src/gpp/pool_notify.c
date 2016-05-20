@@ -1,5 +1,5 @@
-#include<stdlib.h>
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include <semaphore.h>
 /*  ----------------------------------- DSP/BIOS Link                   */
@@ -19,6 +19,35 @@
 #include <pool_notify.h>
 //#include <pool_notify_os.h>
 
+/* ------------------------------------ Custom header, canny edge app   */
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+// Canny edge
+#include "canny_edge.h"
+
+// Verbose mode
+#define VERBOSE 0
+
+// Neon
+#define NEON
+//#define NEONTEST
+
+// Do verification
+#define VERIFY
+
+// Fixed point
+#define FIXED_POINT
+
+#ifdef NEON
+#include <arm_neon.h>
+#include "neon_func.h"
+#endif
+
+#define BOOSTBLURFACTOR 90.0
+
+/* ------------------------------- end custom header ------------------ */
 
 #if defined (__cplusplus)
 extern "C" {
@@ -137,7 +166,35 @@ Uint16 * pool_notify_DataBuf = NULL ;
  */
 STATIC Void pool_notify_Notify (Uint32 eventNo, Pvoid arg, Pvoid info) ;
 
+
+/** ============================================================================
+ *  Custom function prototype - canny edge
+ *  ============================================================================ 
+ */
+
+void unit_init(void);
+
+#ifdef VERIFY
+void verify_results(unsigned char *image, int rows, int cols, float sigma,
+           float tlow, float thigh, unsigned char *edge);
+#endif
+
+/*  ====================================== end custom prototype ================ 
+*/
+
 sem_t sem;
+
+/** ============================================================================
+ *  Canny edge global variables
+ *  ============================================================================ 
+ */
+unsigned char *image;     /* The input image */
+unsigned char *edge;      /* The output edge image */
+int rows, cols;           /* The dimensions of the image. */
+Uint32 imageSize;         /* The image size, rows*cols */
+
+/*  ============================= end canny edge global variables ==============
+*/
 
 /** ============================================================================
  *  @func   pool_notify_Create
@@ -323,16 +380,6 @@ NORMAL_API DSP_STATUS pool_notify_Create (	IN Char8 * dspExecutable,
     return status ;
 }
 
-void unit_init(void) 
-{
-    unsigned int i;
-
-    // Initialize the array with something
-    for(i=0;i<pool_notify_BufferSize;i++) {
-       pool_notify_DataBuf[i] = i % 20 + i % 5;
-    }
-}
-
 #include <sys/time.h>
 
 long long get_usec(void);
@@ -368,7 +415,20 @@ NORMAL_API DSP_STATUS pool_notify_Execute (IN Uint32 numIterations, Uint8 proces
 {
     DSP_STATUS  status    = DSP_SOK ;
 
-    long long start;
+    // canny edge var
+    char *dirfilename = NULL; /* Name of the output gradient direction image */
+    char outfilename[128];    /* Name of the output "edge" image */
+    char composedfname[128];  /* Name of the output "direction" image */
+    float sigma=2.5,              /* Standard deviation of the gaussian kernel. */
+          tlow=0.5,               /* Fraction of the high threshold in hysteresis. */
+          thigh=0.5;              /* High hysteresis threshold control. The actual
+                    threshold is the (100 * thigh) percentage point
+                    in the histogram of the magnitude of the
+                    gradient image that passes non-maximal
+                    suppression. */
+    // end canny edge
+
+    long long startDspTime;        // DSP execution time
 
 	#if defined(DSP)
     unsigned char *buf_dsp;
@@ -378,9 +438,10 @@ NORMAL_API DSP_STATUS pool_notify_Execute (IN Uint32 numIterations, Uint8 proces
     printf ("Entered pool_notify_Execute ()\n") ;
 	#endif
 
+    // Fill DSP buffer with image data
     unit_init();
-
-    start = get_usec();
+ 
+    startDspTime = get_usec();
 
 	#if !defined(DSP)
     printf(" Result is %d \n", sum_dsp(pool_notify_DataBuf,pool_notify_BufferSize));
@@ -397,11 +458,12 @@ NORMAL_API DSP_STATUS pool_notify_Execute (IN Uint32 numIterations, Uint8 proces
                          (Void *) pool_notify_DataBuf,
                          AddrType_Usr) ;
     NOTIFY_notify (processorId,pool_notify_IPS_ID,pool_notify_IPS_EVENTNO,1);
-
+    printf(" Result is %d \n", sum_dsp(pool_notify_DataBuf,pool_notify_BufferSize));
+    
     sem_wait(&sem);
 	#endif
 
-    printf("Sum execution time %lld us.\n", get_usec()-start);
+    printf("DSP execution time %lld us.\n", get_usec()-startDspTime);
 
     return status ;
 }
@@ -503,7 +565,7 @@ NORMAL_API Void pool_notify_Delete (Uint8 processorId)
  *  @modif  None
  *  ============================================================================
  */
-NORMAL_API Void pool_notify_Main (IN Char8 * dspExecutable, IN Char8 * strBufferSize)
+NORMAL_API Void pool_notify_Main (IN Char8 * dspExecutable, IN Char8 * infilename)
 {
     DSP_STATUS status       = DSP_SOK ;
     Uint8      processorId  = 0 ;
@@ -512,12 +574,41 @@ NORMAL_API Void pool_notify_Main (IN Char8 * dspExecutable, IN Char8 * strBuffer
     printf ("========== Sample Application : pool_notify ==========\n") ;
 	#endif
 
-    if (   (dspExecutable != NULL) && (strBufferSize != NULL)   ) 
+    if (   (dspExecutable != NULL) && (infilename != NULL)   ) 
 	{
+        Uint32 buffSize;
+        Char8 * strBufferSize = NULL; 
+
+        // Add timing functions
+        long long startTotalTime;                        // Total execution time
+        long long startDspTime;                          // DSP execution time
+        long long startNeonTime;                         // Neon execution time
+
+        /****************************************************************************
+        * Read in the image. This read function allocates memory for the image.
+        ****************************************************************************/
+        if(VERBOSE) printf("Reading the image %s.\n", infilename);
+        if(read_pgm_image(infilename, &image, &rows, &cols) == 0)
+        {
+            fprintf(stderr, "Error reading the input image, %s.\n", infilename);
+            exit(1);
+        }
+
+        /* 
+         *  Calculate buffer size based on image height and width. 
+         *  Force to be multiple of 128 
+         */
+        imageSize = rows*cols;
+        buffSize = imageSize;
+        if(buffSize % 128 != 0) {
+            buffSize = ((buffSize/128)+1)*128;
+        }
+        sprintf(strBufferSize, "%lu", buffSize);
+
         /*
          *  Validate the buffer size and number of iterations specified.
          */
-        pool_notify_BufferSize = DSPLINK_ALIGN ( atoi (strBufferSize),
+        pool_notify_BufferSize = DSPLINK_ALIGN ( buffSize,
                                              DSPLINK_BUF_ALIGN) ;
 		#ifdef DEBUG
         printf(" Allocated a buffer of %d bytes\n",(int)pool_notify_BufferSize );
@@ -583,6 +674,54 @@ STATIC Void pool_notify_Notify (Uint32 eventNo, Pvoid arg, Pvoid info)
     }
 }
 
+/** ----------------------------------------------------------------------------
+ *  Canny edge custom functions
+ *  ----------------------------------------------------------------------------
+ */
+
+// Initialize pool_notify buffer with image data
+void unit_init(void) 
+{
+    // Fill pool_notify buffer with 0x00
+    memset(pool_notify_DataBuf, 0x00, pool_notify_BufferSize);
+    // Copy image data to pool_notify buffer
+    memcpy(pool_notify_DataBuf, image, imageSize);
+}
+
+#ifdef VERIFY
+/****************************************************************************
+* Custom functions: Verify results, compare with baseline
+****************************************************************************/
+void verify_results(unsigned char *image, int rows, int cols, float sigma,
+       float tlow, float thigh, unsigned char *edge)
+{
+    unsigned char *edge_base;      /* The output baseline edge of image */
+    unsigned int i;                /* Index row for verification */
+    unsigned int j;                 /* Index column for verification */
+    unsigned long false_alarm = 0;
+    unsigned long misdetection = 0;
+    unsigned long total_error = 0;
+
+    canny_base(image, rows, cols, sigma, tlow, thigh, &edge_base);
+
+    for(i=0; i<rows; i++){        
+        for(j=0; j<cols; j++){
+            if(edge_base[i*cols+j] != edge[i*cols+j]) {
+                if(edge_base[i*cols+j] == 255)
+                    false_alarm++;
+                else
+                    misdetection++;
+            }
+        }
+    }
+    total_error = false_alarm + misdetection;
+    printf("Total error (%%): %f\n", (float)total_error/(rows*cols)*100);
+    printf("False alarm (%%): %f\n", (float)false_alarm/(rows*cols)*100);
+    printf("Misdetection (%%): %f\n", (float)misdetection/(rows*cols)*100);
+}
+#endif
+
+/*------------------------------- end custom canny edge implementations ---------------*/
 
 #if defined (__cplusplus)
 }

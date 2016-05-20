@@ -19,19 +19,19 @@
 int main (int argc, char ** argv)
 {
     Char8 * dspExecutable    = NULL ;
-    Char8 * strBufferSize    = NULL ;
+    Char8 * infilename       = NULL ;
 
     if (argc != 3) {
         printf ("Usage : %s <absolute path of DSP executable> "
-           "<Buffer Size> <number of transfers>\n",
+           "<Imagefile PGM>\n",
            argv [0]) ;
     }
     else {
         dspExecutable    = argv [1] ;
-        strBufferSize    = argv [2] ;
+        infilename       = argv [2] ;
 
         pool_notify_Main (dspExecutable,
-                          strBufferSize) ;
+                          infilename) ;
     }
 
     return 0 ;

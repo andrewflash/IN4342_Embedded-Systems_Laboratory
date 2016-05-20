@@ -1,18 +1,19 @@
 SHELL = /bin/sh
 
-BASE_TOOLCHAIN := /opt/bbToolChain/usr/local/share/codesourcery/
+
+BASE_TOOLCHAIN := /data/usr/local/share/codesourcery/
 CC := arm-none-linux-gnueabi-gcc
 
-DSPLINK := /opt/bbToolChain/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
+DSPLINK := /data/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
 
 #   ----------------------------------------------------------------------------
 #   General options, sources and libraries
 #   ----------------------------------------------------------------------------
-SRCS := pool_notify.c gpp_main.c
+SRCS := pool_notify.c gpp_main.c pgm_io.c hysteresis.c neon_func.c canny_edge.c
 OBJS :=
 DEBUG :=
 LDFLAGS := -lpthread -lm -static
-CFLAGS := -DDSP -DDEBUG
+CFLAGS := -DDSP -DDEBUG -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations
 LIBS :=
 BIN := pool_notify
 
