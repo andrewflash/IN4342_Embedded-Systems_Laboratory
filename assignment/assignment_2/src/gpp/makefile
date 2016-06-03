@@ -1,19 +1,41 @@
 SHELL = /bin/sh
 
-
-BASE_TOOLCHAIN := /data/usr/local/share/codesourcery/
+# Use line below to compile in VM
+#BASE_TOOLCHAIN := /data/usr/local/share/codesourcery/
+# Use line below to compile in the server 
+BASE_TOOLCHAIN := /data/bbToolChain/usr/local/share/codesourcery/
 CC := arm-none-linux-gnueabi-gcc
 
-DSPLINK := /data/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
+# Use line below to compile in VM
+#DSPLINK := /data/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
+# Use line below to compile in the server
+DSPLINK := /data/bbToolChain/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
 
 #   ----------------------------------------------------------------------------
 #   General options, sources and libraries
 #   ----------------------------------------------------------------------------
-SRCS := pool_notify.c gpp_main.c pgm_io.c hysteresis.c neon_func.c canny_edge.c
+SRCS := pool_notify.c gpp_main.c pgm_io.c hysteresis.c neon_func.c canny_edge.c timer.c
 OBJS :=
 DEBUG :=
 LDFLAGS := -lpthread -lm -static
-CFLAGS := -DDSP -DDEBUG -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations
+# Use DSP + Neon
+CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38
+# Use DSP + Neon and copy entire image to shared memory (FULL_BUFFER)
+#CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DFULL_BUFFER
+# Use DSP + Neon using u16 for gaussian smooth
+#CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DGAUSS_U16
+# Use DSP + Neon using u32 for gaussian smooth
+#CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DGAUSS_U32
+# Use DSP + Neon using floating point for gaussian smooth
+#CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DGAUSS_FLOAT
+# Use Baseline Only
+#CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DBASELINE
+# Use DSP Only
+#CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=0
+# Use NEON Only
+#CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=100
+
+
 LIBS :=
 BIN := pool_notify
 
@@ -55,8 +77,8 @@ INCLUDES := -I$(DSPLINK)/gpp/inc                   \
 #   ----------------------------------------------------------------------------
 ALL_CFLAGS := $(INCLUDES)                   \
               -mlittle-endian               \
-              -march=armv5t                 \
-              -mtune=arm9tdmi               \
+              -march=armv7-a                  \
+              -mtune=cortex-a8               \
               -msoft-float                  \
               -Uarm                         \
               -Wdeclaration-after-statement \
@@ -135,4 +157,4 @@ clean:
 	@rm -f $(OBJDIR_R)/* *~
 
 send: $(BINDIR_R)/$(BIN)
-	scp $(BINDIR_R)/$(BIN) root@192.168.0.202:/home/root/esLAB/pool_notify/.
+	scp $(BINDIR_R)/$(BIN) root@192.168.0.202:/home/root/esLAB/test/.

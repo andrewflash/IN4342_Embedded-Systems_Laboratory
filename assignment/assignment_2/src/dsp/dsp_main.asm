@@ -1,6 +1,6 @@
 ;******************************************************************************
 ;* TMS320C6x C/C++ Codegen                                       Unix v6.1.17 *
-;* Date/Time created: Thu May 19 21:42:07 2016                                *
+;* Date/Time created: Fri Jun  3 13:00:46 2016                                *
 ;******************************************************************************
 	.compiler_opts --c64p_l1d_workaround=default --disable:=sploop --endian=little --hll_source=on --mem_model:code=far --mem_model:const=data --mem_model:data=far --predefine_memory_model_macros --quiet --silicon_version=6500 --symdebug:skeletal 
 
@@ -31,7 +31,7 @@ $C$DW$CU	.dwtag  DW_TAG_compile_unit
 	.dwattr $C$DW$CU, DW_AT_name("dsp_main.c")
 	.dwattr $C$DW$CU, DW_AT_producer("TMS320C6x C/C++ Codegen Unix v6.1.17 Copyright (c) 1996-2010 Texas Instruments Incorporated")
 	.dwattr $C$DW$CU, DW_AT_TI_version(0x01)
-	.dwattr $C$DW$CU, DW_AT_comp_dir("/home/ubuntu/Documents/Assig2/pool_notify/dsp")
+	.dwattr $C$DW$CU, DW_AT_comp_dir("/data/home/in4342-01/Angga/ass2/code_06_02/dsp")
 
 $C$DW$1	.dwtag  DW_TAG_subprogram, DW_AT_name("TSK_create")
 	.dwattr $C$DW$1, DW_AT_TI_symbol_name("_TSK_create")
@@ -104,7 +104,7 @@ $C$DW$15	.dwtag  DW_TAG_variable, DW_AT_name("MPCSXFER_NumIterations")
 	.dwattr $C$DW$15, DW_AT_location[DW_OP_addr _MPCSXFER_NumIterations]
 	.dwattr $C$DW$15, DW_AT_type(*$C$DW$T$34)
 	.dwattr $C$DW$15, DW_AT_external
-;	/data/usr/local/share/c6000/bin/opt6x /tmp/058956jqYNm /tmp/058952dYs5L 
+;	/data/bbToolChain/usr/local/share/c6000/bin/opt6x /tmp/27938wZJ2zl /tmp/27938a2OEpI 
 	.sect	".text"
 	.clink
 	.global	_main
