@@ -45,7 +45,7 @@ We provide a shell script, i.e. 'makecompile.sh' to easily compile both DSP and 
 The default scenario uses configuration as follow:
 
 	In GPP:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=38
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38
 
 	In DSP:
 		CFLAGS := -I$(BASE_BSL)/dsp/include -DP__ROFILE -mw -DFRACTION=38
@@ -61,7 +61,7 @@ Add "-DBASELINE" in your GPP makefile.
 You can test baseline version by using the following configuration:
 
 	In GPP:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DBASELINE
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DBASELINE
 
 Note that it is not necessary to configure DSP makefile. Also, the BASELINE definition works regardless of FRACTION.
 Therefore, it is not necessary to delete the FRACTION definition.
@@ -72,7 +72,7 @@ Therefore, it is not necessary to delete the FRACTION definition.
 To execute gaussian_smooth using DSP only, use "-DFRACTION=0" both in DSP and GPP makefile.
 
 	In GPP:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=0
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=0
 
 	In DSP:
 		CFLAGS := -I$(BASE_BSL)/dsp/include -DP__ROFILE -mw -DFRACTION=0
@@ -85,7 +85,7 @@ It is not necessary to change FRACTION in DSP because the functions related to D
 Thus, there will be no communication between GPP and DSP.
 
 	In GPP:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=100
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=100
 
 ---------------------------
 1.4. Using Custom Workload
@@ -95,7 +95,7 @@ taken by NEON. The value should be between 1 - 99. You have to modify both GPP a
 Note that the value in DSP should be the same as in GPP. It is not a complement to each other.
 
 	In GPP:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=40
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=40
 
 	In DSP:
 		CFLAGS := -I$(BASE_BSL)/dsp/include -DP__ROFILE -mw -DFRACTION=40
@@ -110,7 +110,7 @@ If we do not define '-DFULL_BUFFER', the size of allocated memory is equal to th
 sent to DSP, which depends on the FRACTION value. You only need to configure GPP makefile.
 
 	In GPP:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=38 -DFULL_BUFFER
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DFULL_BUFFER
 
 ------------------------------------------------------------------
 1.6. Using different data types for Gaussian smooth NEON function
@@ -123,13 +123,13 @@ There are 3 different data types that can be used to calculate gaussian_smooth f
 You can modify GPP makefile only. You do not need to configure DSP makefile.
 
 	Using uint16:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=38 -DGAUSS_U16
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DGAUSS_U16
 
 	Using uint32:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=38 -DGAUSS_U32
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DGAUSS_U32
 
 	Using floating point:
-		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -funsafe-math-optimizations -DFRACTION=38 -DGAUSS_FLOAT
+		CFLAGS := -O3 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp -ffast-math -DFRACTION=38 -DGAUSS_FLOAT
 
 The default configuration uses uint32.
 
