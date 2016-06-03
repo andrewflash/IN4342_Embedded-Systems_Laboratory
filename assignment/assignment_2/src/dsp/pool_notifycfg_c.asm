@@ -1,6 +1,6 @@
 ;******************************************************************************
 ;* TMS320C6x C/C++ Codegen                                       Unix v6.1.17 *
-;* Date/Time created: Thu May 19 21:42:07 2016                                *
+;* Date/Time created: Fri Jun  3 13:00:46 2016                                *
 ;******************************************************************************
 	.compiler_opts --c64p_l1d_workaround=default --disable:=sploop --endian=little --hll_source=on --mem_model:code=far --mem_model:const=data --mem_model:data=far --predefine_memory_model_macros --quiet --silicon_version=6500 --symdebug:skeletal 
 
@@ -31,8 +31,8 @@ $C$DW$CU	.dwtag  DW_TAG_compile_unit
 	.dwattr $C$DW$CU, DW_AT_name("pool_notifycfg_c.c")
 	.dwattr $C$DW$CU, DW_AT_producer("TMS320C6x C/C++ Codegen Unix v6.1.17 Copyright (c) 1996-2010 Texas Instruments Incorporated")
 	.dwattr $C$DW$CU, DW_AT_TI_version(0x01)
-	.dwattr $C$DW$CU, DW_AT_comp_dir("/home/ubuntu/Documents/Assig2/pool_notify/dsp")
-;	/data/usr/local/share/c6000/bin/opt6x /tmp/05901qtinsK /tmp/05901QqdE2U 
+	.dwattr $C$DW$CU, DW_AT_comp_dir("/data/home/in4342-01/Angga/ass2/code_06_02/dsp")
+;	/data/bbToolChain/usr/local/share/c6000/bin/opt6x /tmp/27944OnQ6Tu /tmp/27944Ayk4na 
 
 ;******************************************************************************
 ;* TYPE INFORMATION                                                           *

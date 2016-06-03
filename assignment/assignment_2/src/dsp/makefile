@@ -1,6 +1,10 @@
 SHELL = /bin/sh
 
-BASE_TOOLCHAIN := /data/usr/local/share
+# Use line below to compile in VM
+#BASE_TOOLCHAIN := /data/usr/local/share
+# Use line below to compile in the server
+BASE_TOOLCHAIN := /data/bbToolChain/usr/local/share
+
 BASE_COMPILER := $(BASE_TOOLCHAIN)/c6000
 BASE_SABIOS := $(BASE_TOOLCHAIN)/tidspbios/bios_5_41_00_06
 BASE_BSL := $(BASE_COMPILER)
@@ -8,8 +12,10 @@ BASE_BSL := $(BASE_COMPILER)
 CC := cl6x
 TCONF := tconf
 
-DSPLINK := /data/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
-
+# Use line below to compile in VM
+#DSPLINK := /data/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
+# Use line below to compile in the server
+DSPLINK := /data/bbToolChain/usr/local/share/bbframework/platform/beagle-linux/tools/dsplink_linux_1_65_00_03
 
 #   ----------------------------------------------------------------------------
 #   Project name. 
@@ -26,7 +32,11 @@ PROJNAME := pool_notify
 #   ----------------------------------------------------------------------------
 DEBUG :=
 # CFLAGS := -I$(BASE_BSL)/dsp/include -DP__ROFILE -s -mw
-CFLAGS := -I$(BASE_BSL)/dsp/include -DP__ROFILE -mw
+# Use DSP + NEON
+CFLAGS := -I$(BASE_BSL)/dsp/include -DP__ROFILE -mw -DFRACTION=38
+# Use DSP Only
+#CFLAGS := -I$(BASE_BSL)/dsp/include -DP__ROFILE -mw -DFRACTION=0
+
 LDFLAGS := -i$(BASE_BSL)/dsp/lib
 CSRCS := task.c pool_notify_config.c dsp_main.c
 ASRCS :=
@@ -215,5 +225,5 @@ clean:
 	@rm -f ./$(OBJDIR_R)/* *~
 
 send: $(BINDIR_R)/$(BIN)
-	scp $(BINDIR_R)/$(BIN) root@192.168.0.202:/home/root/esLAB/pool_notify/.
+	scp $(BINDIR_R)/$(BIN) root@192.168.0.202:/home/root/esLAB/test/.
 

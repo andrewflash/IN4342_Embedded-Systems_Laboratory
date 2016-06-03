@@ -30,4 +30,7 @@ short int* gaussian_smooth_fix(unsigned char *image, int rows, int cols, float s
 void canny_base(unsigned char *image, int rows, int cols, float sigma,
            float tlow, float thigh, unsigned char **edge_base);
 
+extern long long startGaussBaseTime;  
+extern long long stopGaussBaseTime;
+
 #endif /* !defined (canny_edge_H) */

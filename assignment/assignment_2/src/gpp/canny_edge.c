@@ -75,6 +75,7 @@
 #endif
 
 #include "canny_edge.h"
+#include "timer.h"
 
 /*******************************************************************************
 * Procedure: radian_direction
@@ -387,9 +388,9 @@ void canny_base(unsigned char *image, int rows, int cols, float sigma,
     * deviation.
     ****************************************************************************/
     if(VERBOSE) printf("Smoothing the image using a gaussian kernel.\n");
-    
+    startGaussBaseTime = get_usec();
     smoothedim = gaussian_smooth(image, rows, cols, sigma);
-    
+    stopGaussBaseTime = get_usec();
     /****************************************************************************
     * Compute the first derivative in the x and y directions.
     ****************************************************************************/
